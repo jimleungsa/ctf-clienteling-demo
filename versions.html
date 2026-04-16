@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Clienteling - 版本历史</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --ctf-red: #C8102E;
+            --ctf-gold: #C9A962;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+            background: #f5f5f5;
+        }
+        .version-card {
+            transition: all 0.3s;
+        }
+        .version-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <div class="max-w-2xl mx-auto">
+        <!-- Header -->
+        <div class="text-center py-8">
+            <h1 class="text-2xl font-bold mb-2" style="color: #C8102E;">CTF Clienteling</h1>
+            <p class="text-gray-600">版本历史与切换</p>
+        </div>
+
+        <!-- Versions -->
+        <div class="space-y-4">
+            
+            <!-- Latest -->
+            <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #C8102E;">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-semibold px-2 py-1 rounded text-white mb-2 inline-block" style="background: #C8102E;">最新</span>
+                        <h2 class="text-lg font-bold text-gray-800">v2 - 纯 HTML 稳定版</h2>
+                        <p class="text-sm text-gray-600 mt-1">2024-04-16</p>
+                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
+                            <li>• 10个完整页面</li>
+                            <li>• 底部导航栏修复</li>
+                            <li>• 纯 HTML，零依赖</li>
+                        </ul>
+                    </div>
+                    <a href="v2.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium" style="background: #C8102E;">查看</a>
+                </div>
+            </div>
+
+            <!-- v2 with timestamp -->
+            <div class="version-card bg-white rounded-xl p-5 shadow-sm">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">v2-20260416</h2>
+                        <p class="text-sm text-gray-600 mt-1">带时间戳版本（避免缓存）</p>
+                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
+                            <li>• 同上</li>
+                            <li>• 时间戳：20260416154657</li>
+                        </ul>
+                    </div>
+                    <a href="v2-20260416154657.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium" style="background: #C8102E;">查看</a>
+                </div>
+            </div>
+
+            <!-- Test Nav -->
+            <div class="version-card bg-white rounded-xl p-5 shadow-sm">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">Test Nav - 导航栏测试</h2>
+                        <p class="text-sm text-gray-600 mt-1">2024-04-16</p>
+                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
+                            <li>• 仅底部导航栏</li>
+                            <li>• 用于验证布局</li>
+                            <li>• 最简结构</li>
+                        </ul>
+                    </div>
+                    <a href="test-nav.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium" style="background: #C9A962;">查看</a>
+                </div>
+            </div>
+
+            <!-- v1 -->
+            <div class="version-card bg-white rounded-xl p-5 shadow-sm opacity-75">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-xs font-semibold px-2 py-1 rounded bg-gray-400 text-white mb-2 inline-block">旧版</span>
+                        <h2 class="text-lg font-bold text-gray-800">v1 - 初始版本</h2>
+                        <p class="text-sm text-gray-600 mt-1">2024-04-15</p>
+                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
+                            <li>• 深色背景</li>
+                            <li>• 基础功能</li>
+                            <li>• 已废弃</li>
+                        </ul>
+                    </div>
+                    <a href="versions/v1-20260415.html" class="px-4 py-2 rounded-lg bg-gray-400 text-white text-sm font-medium">查看</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center py-8 text-gray-400 text-sm">
+            <p>CTF Clienteling App - 版本管理中心</p>
+            <p class="mt-1">GitHub: jimleungsa/ctf-clienteling-demo</p>
+        </div>
+    </div>
+</body>
+</html>

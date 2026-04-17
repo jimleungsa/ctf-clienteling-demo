@@ -23,9 +23,7 @@
         }
         .tag-latest { background: #C8102E; color: white; }
         .tag-stable { background: #C9A962; color: white; }
-        .tag-test { background: #3B82F6; color: white; }
         .tag-old { background: #9CA3AF; color: white; }
-        .tag-react { background: #61DAFB; color: black; }
     </style>
 </head>
 <body class="min-h-screen p-4">
@@ -34,44 +32,41 @@
         <div class="text-center py-8">
             <h1 class="text-2xl font-bold mb-2" style="color: #C8102E;">CTF Clienteling</h1>
             <p class="text-gray-600">版本历史与切换中心</p>
-            <p class="text-xs text-gray-400 mt-2">共 10 个历史版本（全部托管在 GitHub Pages）</p>
+            <p class="text-xs text-gray-400 mt-2">共 5 个可用版本</p>
         </div>
 
         <!-- Legend -->
         <div class="flex flex-wrap gap-2 mb-6 justify-center">
             <span class="text-xs px-2 py-1 rounded tag-latest">最新</span>
             <span class="text-xs px-2 py-1 rounded tag-stable">稳定</span>
-            <span class="text-xs px-2 py-1 rounded tag-test">测试</span>
-            <span class="text-xs px-2 py-1 rounded tag-react">React</span>
             <span class="text-xs px-2 py-1 rounded tag-old">旧版</span>
         </div>
 
         <!-- Versions -->
         <div class="space-y-4">
             
-            <!-- v2.1 - Optimized -->
+            <!-- v2.1 - Latest -->
             <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #C8102E;">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-xs font-semibold px-2 py-1 rounded tag-latest">最新</span>
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-stable">稳定</span>
+                            <span class="text-xs font-semibold px-2 py-1 rounded tag-stable">推荐</span>
                         </div>
                         <h2 class="text-lg font-bold text-gray-800">v2.1 - 视觉优化版</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-16 17:00+</p>
+                        <p class="text-sm text-gray-600 mt-1">2024-04-16</p>
                         <ul class="text-sm text-gray-500 mt-2 space-y-1">
+                            <li>• 10个完整页面（首页/客户/查货/AI话术/我的）</li>
                             <li>• 卡片式布局 + 阴影圆角</li>
                             <li>• 周大福红色渐变顶部</li>
-                            <li>• 优化间距和留白</li>
-                            <li>• 底部导航栏优化</li>
-                            <li>• 路演级别视觉</li>
+                            <li>• 路演级别视觉效果</li>
                         </ul>
                     </div>
                     <a href="v2.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap" style="background: #C8102E;">查看</a>
                 </div>
             </div>
 
-            <!-- v2.0 - Pure HTML -->
+            <!-- v2.0 - Stable -->
             <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #C9A962;">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
@@ -79,11 +74,10 @@
                             <span class="text-xs font-semibold px-2 py-1 rounded tag-stable">稳定</span>
                         </div>
                         <h2 class="text-lg font-bold text-gray-800">v2.0 - 纯 HTML 完整版</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-16 15:20</p>
+                        <p class="text-sm text-gray-600 mt-1">2024-04-16</p>
                         <ul class="text-sm text-gray-500 mt-2 space-y-1">
                             <li>• 10个完整页面</li>
                             <li>• 纯 HTML，零依赖</li>
-                            <li>• 底部导航栏修复</li>
                             <li>• 功能完整，视觉待优化</li>
                         </ul>
                     </div>
@@ -91,82 +85,20 @@
                 </div>
             </div>
 
-            <!-- Test Nav -->
-            <div class="version-card bg-white rounded-xl p-5 shadow-sm">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-test">测试</span>
-                        </div>
-                        <h2 class="text-lg font-bold text-gray-800">Test Nav - 导航栏验证</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-16 12:27</p>
-                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
-                            <li>• 仅底部导航栏</li>
-                            <li>• 验证布局结构</li>
-                            <li>• 最简实现</li>
-                        </ul>
-                    </div>
-                    <a href="test-nav.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap" style="background: #3B82F6;">查看</a>
-                </div>
-            </div>
-
-            <!-- React Version -->
-            <div class="version-card bg-white rounded-xl p-5 shadow-sm">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-react">React</span>
-                            <span class="text-xs px-2 py-1 rounded bg-gray-200 text-gray-600">已废弃</span>
-                        </div>
-                        <h2 class="text-lg font-bold text-gray-800">React + Vite 版本</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-16 13:00-15:00</p>
-                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
-                            <li>• React 18 + Vite + Tailwind</li>
-                            <li>• 组件化开发</li>
-                            <li>• 部署复杂，已回滚</li>
-                            <li>• 仅作技术验证</li>
-                        </ul>
-                    </div>
-                    <span class="px-4 py-2 rounded-lg bg-gray-300 text-gray-500 text-sm font-medium whitespace-nowrap">不可用</span>
-                </div>
-            </div>
-
-            <!-- v1.2 - Fixed (File incomplete, temporarily unavailable) -->
-            <div class="version-card bg-white rounded-xl p-5 shadow-sm opacity-60">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-old">旧版</span>
-                            <span class="text-xs px-2 py-1 rounded bg-gray-200 text-gray-600">文件损坏</span>
-                        </div>
-                        <h2 class="text-lg font-bold text-gray-800">v1.2 - 修复版（Pro）</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-16 11:00</p>
-                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
-                            <li>• 修复底部导航栏</li>
-                            <li>• 添加二级页面</li>
-                            <li>• 浅色主题（Pro 风格）</li>
-                            <li>• 金色系配色</li>
-                        </ul>
-                        <p class="text-xs text-red-400 mt-2">⚠️ 原始文件不完整，暂时无法查看</p>
-                    </div>
-                    <span class="px-4 py-2 rounded-lg bg-gray-300 text-gray-500 text-sm font-medium whitespace-nowrap">不可用</span>
-                </div>
-            </div>
-
-            <!-- v1.1 - Initial Fix -->
+            <!-- v1.1 - HK Version -->
             <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #8B0000;">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-2">
+                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background: #8B0000; color: white;">港澳版</span>
                             <span class="text-xs font-semibold px-2 py-1 rounded tag-old">旧版</span>
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-stable">可查阅</span>
                         </div>
-                        <h2 class="text-lg font-bold text-gray-800">v1.1 - 港澳版（HK）</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-15 22:21</p>
+                        <h2 class="text-lg font-bold text-gray-800">v1.1 - 港澳海外 Clienteling</h2>
+                        <p class="text-sm text-gray-600 mt-1">2024-04-15</p>
                         <ul class="text-sm text-gray-500 mt-2 space-y-1">
-                            <li>• 修复 HTML 结构</li>
-                            <li>• 添加 JS 函数</li>
-                            <li>• 补充缺失页面</li>
+                            <li>• 跨境库存查询（全球门店地图）</li>
+                            <li>• 多语言AI话术（繁/简/英/日/韩）</li>
+                            <li>• 实时汇率看板（CNY/HKD/USD/JPY）</li>
                             <li>• 深色主题（港澳风格）</li>
                         </ul>
                     </div>
@@ -174,33 +106,13 @@
                 </div>
             </div>
 
-            <!-- v1.0 - Original -->
-            <div class="version-card bg-white rounded-xl p-5 shadow-sm opacity-60">
+            <!-- v1.0 - Mainland Version -->
+            <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #C8102E;">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-old">初始</span>
-                        </div>
-                        <h2 class="text-lg font-bold text-gray-800">v1.0 - 初始版本</h2>
-                        <p class="text-sm text-gray-600 mt-1">2024-04-15</p>
-                        <ul class="text-sm text-gray-500 mt-2 space-y-1">
-                            <li>• 深色背景</li>
-                            <li>• 基础功能</li>
-                            <li>• 结构不完整</li>
-                            <li>• 已废弃</li>
-                        </ul>
-                    </div>
-                    <a href="versions/v1-20260415.html" class="px-4 py-2 rounded-lg bg-gray-400 text-white text-sm font-medium whitespace-nowrap">查看</a>
-                </div>
-            </div>
-
-            <!-- v1.0 GitHub - 周大福导购助手 -->
-            <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #8B0000;">
-                <div class="flex justify-between items-start">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background: #8B0000; color: white;">内地版</span>
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-stable">已迁移</span>
+                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background: #C8102E; color: white;">内地版</span>
+                            <span class="text-xs font-semibold px-2 py-1 rounded tag-old">旧版</span>
                         </div>
                         <h2 class="text-lg font-bold text-gray-800">v1.0 - 周大福导购助手</h2>
                         <p class="text-sm text-gray-600 mt-1">2024-04-15</p>
@@ -211,28 +123,26 @@
                             <li>• AI话术生成（3条话术可选）</li>
                         </ul>
                     </div>
-                    <a href="versions/v1.0-ctf-guide-20260415.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap" style="background: #8B0000;">查看</a>
+                    <a href="versions/v1.0-ctf-guide-20260415.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap" style="background: #C8102E;">查看</a>
                 </div>
             </div>
 
-            <!-- v1.1 GitHub - 港澳海外版 -->
-            <div class="version-card bg-white rounded-xl p-5 shadow-sm border-l-4" style="border-color: #C8102E;">
+            <!-- v1.0 - Original -->
+            <div class="version-card bg-white rounded-xl p-5 shadow-sm opacity-75">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background: #C8102E; color: white;">海外版</span>
-                            <span class="text-xs font-semibold px-2 py-1 rounded tag-stable">已迁移</span>
+                            <span class="text-xs font-semibold px-2 py-1 rounded tag-old">初始</span>
                         </div>
-                        <h2 class="text-lg font-bold text-gray-800">v1.1 - 港澳海外 Clienteling</h2>
+                        <h2 class="text-lg font-bold text-gray-800">v1.0 - 初始版本</h2>
                         <p class="text-sm text-gray-600 mt-1">2024-04-15</p>
                         <ul class="text-sm text-gray-500 mt-2 space-y-1">
-                            <li>• 跨境库存查询（全球门店地图）</li>
-                            <li>• 多语言AI话术（繁/简/英/日/韩）</li>
-                            <li>• 实时汇率看板（CNY/HKD/USD/JPY）</li>
-                            <li>• WhatsApp集成 + 预约管理</li>
+                            <li>• 深色背景</li>
+                            <li>• 基础功能</li>
+                            <li>• 结构不完整（历史存档）</li>
                         </ul>
                     </div>
-                    <a href="versions/v1.1-20260415.html" class="px-4 py-2 rounded-lg text-white text-sm font-medium whitespace-nowrap" style="background: #C8102E;">查看</a>
+                    <a href="versions/v1-20260415.html" class="px-4 py-2 rounded-lg bg-gray-400 text-white text-sm font-medium whitespace-nowrap">查看</a>
                 </div>
             </div>
 
@@ -243,9 +153,9 @@
             <h3 class="font-semibold text-blue-800 mb-2">💡 使用提示</h3>
             <ul class="text-sm text-blue-700 space-y-1">
                 <li>• 推荐使用 <strong>v2.1 最新版</strong> 或 <strong>v2.0 稳定版</strong></li>
-                <li>• 带时间戳的版本可避免浏览器缓存</li>
+                <li>• 港澳版 = 海外门店场景（深色主题）</li>
+                <li>• 内地版 = 大陆门店场景（企微风格）</li>
                 <li>• 所有版本源码在 GitHub 仓库中可查看</li>
-                <li>• 如需回滚，可在 GitHub 提交历史中找任意版本</li>
             </ul>
         </div>
 

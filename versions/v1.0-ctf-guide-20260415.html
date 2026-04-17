@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>周大福珠宝导购助手</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --ctf-red: #C8102E;
+            --ctf-red-dark: #8B0000;
+            --ctf-gold: #C9A962;
+            --ctf-gold-light: #E8D5A3;
+            --ctf-gold-dark: #8B7355;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-tertiary: #999999;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F5;
+            --bg-tertiary: #F8F8F8;
+            --divider: #EEEEEE;
+        }
+        
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", Roboto, sans-serif;
+            background: #000;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* 手机容器 - 响应式 */
+        .app-wrapper {
+            width: 100%;
+            height: 100vh;
+            max-width: 430px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @media (min-width: 431px) {
+            .app-wrapper {
+                height: 90vh;
+                margin-top: 5vh;
+                border-radius: 40px;
+                box-shadow: 0 0 0 12px #1a1a1a, 0 50px 100px rgba(0,0,0,0.5);
+            }
+        }
+        
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        @media (max-width: 430px) {
+            .iphone-screen {
+                border-radius: 0;
+            }
+        }
+        
+        /* 状态栏 */
+        .status-bar {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            background: transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .time { font-size: 14px; font-weight: 600; color: #fff; }
+        .status-icons { display: flex; gap: 4px; color: #fff; font-size: 12px; }
+        
+        /* 页面容器 */
+        .page-container {
+            height: 100%;
+            padding-top: 44px;
+            padding-bottom: 70px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: #fff;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .page { display: none; min-height: 100%; }
+        .page.active { display: block; }
+        
+        /* ========== 首页 ========== */
+        .home-header {
+            background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
+            padding: 8px 16px 20px;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+        }
+        
+        .home-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .home-greeting { color: rgba(255,255,255,0.85); font-size: 13px; }
+        .home-name { color: #fff; font-size: 22px; font-weight: 700; }
+        
+        .home-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+        }
+        
+        .home-search {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .home-search i { color: rgba(255,255,255,0.8); font-size: 14px; }
+        .home-search input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+        .home-search input::placeholder { color: rgba(255,255,255,0.6); }
+        
+        /* 模块标题 */
+        .section { padding: 12px 16px; }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .section-title { font-size: 15px; font-weight: 600; color: #333; }
+        .section-subtitle { font-size: 11px; color: #999; }
+        .section-more { font-size: 13px; color: #999; }
+        
+        /* 战报卡片 */
+        .report-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .report-label { font-size: 12px; color: #666; margin-bottom: 4px; }
+        .report-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #C8102E;
+            margin-bottom: 2px;
+        }
+        .report-rate { font-size: 11px; color: #666; }
+        
+        /* 消息通知 */
+        .message-bar {
+            background: #FFF8F0;
+            border-radius: 8px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0 16px 12px;
+        }
+        .message-tag { color: #C9A962; font-size: 11px; font-weight: 500; }
+        .message-text { flex: 1; font-size: 13px; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .message-action { font-size: 12px; color: #999; }
+        
+        /* 客户机会卡片 */
+        .opportunity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 0 16px;
+        }
+        
+        .opportunity-card {
+            aspect-ratio: 1.2;
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: linear-gradient(135deg, #8B7355 0%, #6B5A45 100%);
+        }
+        
+        .opportunity-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+        
+        .opportunity-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .opportunity-count { font-size: 11px; opacity: 0.9; }
+        
+        /* 待跟进任务 */
+        .task-summary {
+            padding: 0 16px 12px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .task-progress {
+            height: 4px;
+            background: #E8E8E8;
+            border-radius: 2px;
+            margin: 0 16px 12px;
+            overflow: hidden;
+        }
+        
+        .task-progress-fill {
+            height: 100%;
+            background: #C8102E;
+            border-radius: 2px;
+            width: 88%;
+        }
+        
+        .task-list { padding: 0 16px; }
+        
+        .task-item {
+            background: #fff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .task-item-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 8px;
+        }
+        
+        .task-tag {
+            background: #C9A962;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        .task-tag-urgent { background: #C8102E; }
+        
+        .task-title { font-size: 14px; font-weight: 500; color: #333; flex: 1; }
+        
+        .task-time { font-size: 11px; color: #999; }
+        .task-time-urgent { color: #C8102E; }
+        
+        /* ========== 客户中心 ========== */
+        .customer-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #F5F5F5;
+        }
+        
+        .page-title {
+            font-size: 17px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        
+        .search-box {
+            background: #F5F5F5;
+            border-radius: 20px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-box i { color: #999; font-size: 14px; }
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            outline: none;
+        }
+        .search-box input::placeholder { color: #999; }
+        
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .filter-item {
+            background: #F5F5F5;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        .filter-item.active {
+            background: #C8102E;
+            color: #fff;
+        }
+        
+        .customer-list { padding: 0 16px; }
+        
+        .customer-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid #F5F5F5;
+        }
+        
+        .customer-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        
+        .customer-info { flex: 1; min-width: 0; }
+        
+        .customer-name-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+        
+        .customer-name { font-size: 15px; font-weight: 600; color: #333; }
+        .customer-nickname { font-size: 12px; color: #666; }
+        
+        .customer-level {
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 2px;
+            background: #333;
+            color: #fff;
+        }
+        
+        .customer-level-gold { background: #D4AF37; }
+        
+        .customer-tags {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .customer-tag {
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 2px;
+            background: #F5F5F5;
+            color: #666;
+        }
+        
+        .customer-tag-highlight {
+            background: #C9A962;
+            color: #fff;
+        }
+        
+        .customer-stats {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+        
+        .customer-arrow {
+            color: #CCC;
+            font-size: 14px;
+            margin-left: 8px;
+            flex-shrink: 0;
+            margin-top: 10px;
+        }
+        
+        /* ========== 数据中心 ========== */
+        .data-tabs {
+            display: flex;
+            background: #fff;
+            border-bottom: 1px solid #F5F5F5;
+        }
+        
+        .data-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 6px;
+            font-size: 13px;
+            color: #999;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .data-tab.active {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .data-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: #333;
+        }
+        
+        .data-time-hint {
+            background: #F5F5F5;
+            padding: 8px;
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+        }
+        
+        .data-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 14px;
+            margin: 12px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .data-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .data-card-title { font-size: 15px; font-weight: 600; color: #333; }
+        .data-card-time { font-size: 11px; color: #999; }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .data-grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .data-item { text-align: center; }
+        .data-label { font-size: 11px; color: #666; margin-bottom: 4px; }
+        .data-value { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 2px; }
+        .data-change { font-size: 10px; color: #C9A962; }
+        
+        /* ========== 任务中心 ========== */
+        .task-overview {
+            background: #fff;
+            border-radius: 8px;
+            padding: 14px;
+            margin: 12px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .task-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 14px;
+        }
+        
+        .task-stat { text-align: center; }
+        .task-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #C8102E;
+        }
+        .task-stat-label { font-size: 11px; color: #666; margin-top: 2px; }
+        
+        .task-type-tabs {
+            display: flex;
+            background: #F5F5F5;
+            border-radius: 6px;
+            padding: 3px;
+        }
+        
+        .task-type-tab {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            color: #666;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .task-type-tab.active {
+            background: #fff;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .priority-bar {
+            background: #C8102E;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        /* ========== 我的页面 ========== */
+        .profile-header {
+            background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
+            padding: 20px 16px 20px;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .profile-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            margin-right: 14px;
+            object-fit: cover;
+        }
+        
+        .profile-name { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .profile-id { font-size: 12px; color: rgba(255,255,255,0.8); }
+        .profile-store { font-size: 13px; color: rgba(255,255,255,0.9); margin-top: 2px; }
+        
+        .profile-stats {
+            display: flex;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 12px;
+        }
+        
+        .profile-stat {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .profile-stat:not(:last-child) {
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .profile-stat-value { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+        .profile-stat-label { font-size: 11px; color: rgba(255,255,255,0.8); }
+        
+        .workbench-section { padding: 14px 16px; }
+        .workbench-title { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 10px; }
+        
+        .workbench-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .workbench-item {
+            background: #fff;
+            border-radius: 10px;
+            padding: 14px 6px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            cursor: pointer;
+        }
+        
+        .workbench-icon {
+            width: 42px;
+            height: 42px;
+            background: #FEF2F2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+        }
+        
+        .workbench-icon i { font-size: 20px; color: #C8102E; }
+        .workbench-label { font-size: 11px; color: #333; }
+        
+        .menu-list {
+            background: #fff;
+            border-radius: 10px;
+            margin: 0 16px 16px;
+            overflow: hidden;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 14px;
+            border-bottom: 1px solid #F5F5F5;
+            cursor: pointer;
+        }
+        
+        .menu-item:last-child { border-bottom: none; }
+        
+        .menu-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(200, 16, 46, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .menu-icon i { color: #C8102E; font-size: 16px; }
+        .menu-text { flex: 1; font-size: 14px; color: #333; }
+        .menu-arrow { color: #CCC; font-size: 12px; }
+        
+        /* ========== 底部导航 ========== */
+        .tab-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: #fff;
+            border-top: 1px solid #F5F5F5;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 6px;
+            padding-bottom: 10px;
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 50px;
+            cursor: pointer;
+        }
+        
+        .tab-item.active .tab-icon { color: #C8102E; }
+        .tab-item.active .tab-label { color: #C8102E; }
+        
+        .tab-icon {
+            font-size: 20px;
+            color: #999;
+            margin-bottom: 3px;
+            position: relative;
+        }
+        
+        .tab-badge {
+            position: absolute;
+            top: -3px;
+            right: -7px;
+            background: #C8102E;
+            color: #fff;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 8px;
+            min-width: 14px;
+            text-align: center;
+        }
+        
+        .tab-label { font-size: 10px; color: #999; }
+        
+        /* 通用 */
+        .text-ellipsis {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="iphone-screen">
+            <!-- 状态栏 -->
+            <div class="status-bar" id="statusBar">
+                <div class="time">9:41</div>
+                <div class="status-icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 页面内容 -->
+            <div class="page-container">
+                <!-- ========== 首页 ========== -->
+                <div class="page active" id="pageHome">
+                    <div class="home-header">
+                        <div class="home-top">
+                            <div>
+                                <div class="home-greeting">Hi,</div>
+                                <div class="home-name">岳琦</div>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="home-avatar" alt="">
+                        </div>
+                        <div class="home-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="请输入客户姓名/卡号/手机号">
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">本月最新战报</div>
+                            <div class="section-subtitle">数据统计截止至: 2025年06月18日</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-grid">
+                                <div class="report-item">
+                                    <div class="report-label">门店复购金额</div>
+                                    <div class="report-value">¥102,380</div>
+                                    <div class="report-rate">达标率 20.00%</div>
+                                </div>
+                                <div class="report-item">
+                                    <div class="report-label">门店首销人数</div>
+                                    <div class="report-value">380</div>
+                                    <div class="report-rate">达标率 20.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-bar">
+                        <span class="message-tag">消息</span>
+                        <span class="message-text">加购商品 | 梁女士选取商品进行加购</span>
+                        <span class="message-action">去查看 ></span>
+                    </div>
+                    
+                    <div class="section-header" style="padding: 0 16px;">
+                        <div class="section-title">客户机会</div>
+                        <div class="section-more">更多 ></div>
+                    </div>
+                    <div class="opportunity-grid">
+                        <div class="opportunity-card">
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">新注册会员①</div>
+                                <div class="opportunity-count">20位客户</div>
+                            </div>
+                        </div>
+                        <div class="opportunity-card">
+                            <div class="opportunity-content">
+                                <div class="opportunity-title">高净值会员①</div>
+                                <div class="opportunity-count">265位客户</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-size: 13px; color: #333;">
+                            未添加企微好友客户 <i class="far fa-question-circle" style="color: #999;"></i>
+                        </div>
+                        <div style="font-size: 13px; color: #C8102E; cursor: pointer;">去添加</div>
+                    </div>
+                    
+                    <div class="section-header" style="padding: 0 16px;">
+                        <div class="section-title">待跟进任务</div>
+                        <div class="section-more">更多 ></div>
+                    </div>
+                    <div class="task-summary">
+                        本月已完成88%，剩余3个任务待跟进，1个任务已逾期
+                    </div>
+                    <div class="task-progress">
+                        <div class="task-progress-fill"></div>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-item-header">
+                                <span class="task-tag task-tag-urgent">优先处理</span>
+                                <span class="task-title">传承系列商品上新推广</span>
+                            </div>
+                            <div class="task-time">结束时间: 2025/12/22</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-item-header">
+                                <span class="task-tag">待跟进</span>
+                                <span class="task-title">96 周年庆积分派发活动</span>
+                            </div>
+                            <div class="task-time task-time-urgent">结束时间: 2025/12/18</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-item-header">
+                                <span class="task-tag">待跟进</span>
+                                <span class="task-title">本月生日客户关怀</span>
+                            </div>
+                            <div class="task-time">结束时间: 2025/12/22</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ========== 客户中心 ========== -->
+                <div class="page" id="pageCustomer">
+                    <div class="customer-header">
+                        <div class="page-title">客户中心</div>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="搜索客户姓名、手机号">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <div class="filter-item active">全部</div>
+                        <div class="filter-item">钻石会员</div>
+                        <div class="filter-item">金卡会员</div>
+                        <div class="filter-item">高价值</div>
+                        <div class="filter-item">沉睡客户</div>
+                    </div>
+                    
+                    <div class="customer-list">
+                        <div class="customer-item">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" class="customer-avatar" alt="">
+                            <div class="customer-info">
+                                <div class="customer-name-row">
+                                    <span class="customer-name">王雅婷</span>
+                                    <span class="customer-nickname">一叶知秋🍂</span>
+                                </div>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <span class="customer-level">钻石</span>
+                                    <span class="customer-tag" style="background: #E8E8E8; color: #666;">非企微好友</span>
+                                </div>
+                                <div class="customer-tags">
+                                    <span class="customer-tag customer-tag-highlight">高潜客户</span>
+                                    <span class="customer-tag">活跃</span>
+                                    <span class="customer-tag">即将生日</span>
+                                </div>
+                                <div class="customer-stats">累计消费: 28次/458,000元 | 可用积分: 8,580</div>
+                            </div>
+                            <i class="fas fa-chevron-right customer-arrow"></i>
+                        </div>
+                        
+                        <div class="customer-item">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" class="customer-avatar" alt="">
+                            <div class="customer-info">
+                                <div class="customer-name-row">
+                                    <span class="customer-name">李雪梅</span>
+                                    <span class="customer-nickname">春暖花开</span>
+                                </div>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <span class="customer-level customer-level-gold">金卡</span>
+                                </div>
+                                <div class="customer-tags">
+                                    <span class="customer-tag customer-tag-highlight">沉睡客户</span>
+                                    <span class="customer-tag">黄金偏好</span>
+                                </div>
+                                <div class="customer-stats">累计消费: 15次/186,000元 | 可用积分: 3,200</div>
+                            </div>
+                            <i class="fas fa-chevron-right customer-arrow"></i>
+                        </div>
+                        
+                        <div class="customer-item">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" class="customer-avatar" alt="">
+                            <div class="customer-info">
+                                <div class="customer-name-row">
+                                    <span class="customer-name">陈丽华</span>
+                                    <span class="customer-nickname">优雅人生</span>
+                                </div>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <span class="customer-level customer-level-gold">金卡</span>
+                                </div>
+                                <div class="customer-tags">
+                                    <span class="customer-tag customer-tag-highlight">本月生日</span>
+                                    <span class="customer-tag">翡翠收藏</span>
+                                </div>
+                                <div class="customer-stats">累计消费: 19次/223,000元 | 可用积分: 5,600</div>
+                            </div>
+                            <i class="fas fa-chevron-right customer-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ========== 数据中心 ========== -->
+                <div class="page" id="pageData">
+                    <div class="page-title" style="padding: 12px 16px; border-bottom: 1px solid #F5F5F5;">数据</div>
+                    
+                    <div class="data-tabs">
+                        <div class="data-tab">门店总览</div>
+                        <div class="data-tab">会员</div>
+                        <div class="data-tab active">任务</div>
+                        <div class="data-tab">企微</div>
+                    </div>
+                    
+                    <div class="data-time-hint">数据统计截止至: 2025年12月11日</div>
+                    
+                    <div class="data-card">
+                        <div class="data-card-header">
+                            <div class="data-card-title">任务概览</div>
+                            <div class="data-card-time">2025/12/1-2025/12/11</div>
+                        </div>
+                        <div class="data-grid">
+                            <div class="data-item">
+                                <div class="data-label">累计任务数</div>
+                                <div class="data-value">230</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">完成任务数</div>
+                                <div class="data-value">220</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">任务完成率</div>
+                                <div class="data-value">80%</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-card">
+                        <div class="data-card-header">
+                            <div class="data-card-title">触达情况</div>
+                            <div class="data-card-time">2025/12/11-2025/12/11</div>
+                        </div>
+                        <div class="data-grid data-grid-2">
+                            <div class="data-item">
+                                <div class="data-label">触达客户数</div>
+                                <div class="data-value">22,000</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">触达率</div>
+                                <div class="data-value">80%</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">点击链接人次</div>
+                                <div class="data-value">20,000</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">人均点击频次</div>
+                                <div class="data-value">1.56</div>
+                                <div class="data-change">环比上升23% ↑</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ========== 任务中心 ========== -->
+                <div class="page" id="pageTask">
+                    <div class="page-title" style="padding: 12px 16px; border-bottom: 1px solid #F5F5F5;">任务</div>
+                    
+                    <div class="task-overview">
+                        <div class="task-stats">
+                            <div class="task-stat">
+                                <div class="task-stat-value">230</div>
+                                <div class="task-stat-label">累计任务数</div>
+                            </div>
+                            <div class="task-stat">
+                                <div class="task-stat-value">220</div>
+                                <div class="task-stat-label">完成任务数</div>
+                            </div>
+                            <div class="task-stat">
+                                <div class="task-stat-value">80%</div>
+                                <div class="task-stat-label">任务完成率</div>
+                            </div>
+                        </div>
+                        
+                        <div class="task-type-tabs">
+                            <div class="task-type-tab active">群发任务</div>
+                            <div class="task-type-tab">客户商机</div>
+                        </div>
+                    </div>
+                    
+                    <div class="priority-bar">优先处理 1个任务已逾期</div>
+                    
+                    <div class="task-list" style="padding: 12px 16px;">
+                        <div class="task-item">
+                            <div class="task-item-header">
+                                <span class="task-tag task-tag-urgent">待跟进</span>
+                                <span class="task-title">母亲节活动邀约</span>
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 6px; line-height: 1.5;">
+                                母亲节特别活动，精选珠宝首饰限时8折，邀请高价值客户到店参与
+                            </div>
+                            <div style="display: flex; gap: 12px; margin-top: 10px; font-size: 11px; color: #999;">
+                                <span><i class="fas fa-users" style="margin-right: 4px;"></i>15位客户</span>
+                                <span><i class="fas fa-clock" style="margin-right: 4px;"></i>今天 18:00截止</span>
+                            </div>
+                        </div>
+                        
+                        <div class="task-item">
+                            <div class="task-item-header">
+                                <span class="task-tag">待跟进</span>
+                                <span class="task-title">会员生日关怀</span>
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 6px; line-height: 1.5;">
+                                本月生日会员专属祝福，附赠生日礼品券和双倍积分权益
+                            </div>
+                            <div style="display: flex; gap: 12px; margin-top: 10px; font-size: 11px; color: #999;">
+                                <span><i class="fas fa-users" style="margin-right: 4px;"></i>8位客户</span>
+                                <span><i class="fas fa-clock" style="margin-right: 4px;"></i>今天 20:00截止</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ========== 我的 ========== -->
+                <div class="page" id="pageProfile">
+                    <div class="profile-header">
+                        <div class="profile-user">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop" class="profile-avatar" alt="">
+                            <div class="profile-info">
+                                <div class="profile-name">张美玲</div>
+                                <div class="profile-id">工号：JD20240086</div>
+                                <div class="profile-store"><i class="fas fa-store" style="margin-right: 4px;"></i>北京朝阳大悦城店</div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">¥12.8万</div>
+                                <div class="profile-stat-label">本月销售</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">86%</div>
+                                <div class="profile-stat-label">目标完成</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">42</div>
+                                <div class="profile-stat-label">完成任务</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="workbench-section">
+                        <div class="workbench-title">工作台</div>
+                        <div class="workbench-grid">
+                            <div class="workbench-item">
+                                <div class="workbench-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="workbench-label">金价查询</div>
+                            </div>
+                            <div class="workbench-item">
+                                <div class="workbench-icon">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div class="workbench-label">素材库</div>
+                            </div>
+                            <div class="workbench-item">
+                                <div class="workbench-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div class="workbench-label">话术库</div>
+                            </div>
+                            <div class="workbench-item">
+                                <div class="workbench-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="workbench-label">O2O选配</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-list">
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="menu-text">我的业绩</div>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="menu-text">培训学习</div>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="menu-text">客服支持</div>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="menu-text">设置</div>
+                            <i class="fas fa-chevron-right menu-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部导航 -->
+            <div class="tab-bar">
+                <div class="tab-item active" onclick="switchTab('home')">
+                    <div class="tab-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="tab-label">首页</div>
+                </div>
+                <div class="tab-item" onclick="switchTab('task')">
+                    <div class="tab-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span class="tab-badge">3</span>
+                    </div>
+                    <div class="tab-label">任务</div>
+                </div>
+                <div class="tab-item" onclick="switchTab('customer')">
+                    <div class="tab-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="tab-label">客户</div>
+                </div>
+                <div class="tab-item" onclick="switchTab('data')">
+                    <div class="tab-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="tab-label">数据</div>
+                </div>
+                <div class="tab-item" onclick="switchTab('profile')">
+                    <div class="tab-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="tab-label">我的</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            
+            const tabMap = {
+                'home': { page: 'pageHome', index: 0 },
+                'task': { page: 'pageTask', index: 1 },
+                'customer': { page: 'pageCustomer', index: 2 },
+                'data': { page: 'pageData', index: 3 },
+                'profile': { page: 'pageProfile', index: 4 }
+            };
+            
+            const mapping = tabMap[tab];
+            document.getElementById(mapping.page).classList.add('active');
+            document.querySelectorAll('.tab-item')[mapping.index].classList.add('active');
+        }
+    </script>
+</body>
+</html>
